@@ -9,6 +9,8 @@ import pytz
 import config
 
 
+
+
 def send_curl_request(district_id):
     url = 'https://cdn-api.co-vin.in/api/v2/appointment/sessions/calendarByDistrict?'
     headers = {
@@ -25,6 +27,8 @@ def send_curl_request(district_id):
     response = requests.get(url, headers=headers, params=p)
 
     return response
+
+
 
 
 def sendEmail(body):
@@ -49,6 +53,8 @@ def sendEmail(body):
     smtpSession.send_message(message, username, to)
     smtpSession.quit()
     print(str(datetime.datetime.now()) + ' Alert sent!!!')
+
+
 
 
 while(1):
