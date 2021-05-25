@@ -8,9 +8,6 @@ import sys
 import pytz
 import config
 
-
-
-
 def send_curl_request(district_id):
     url = 'https://cdn-api.co-vin.in/api/v2/appointment/sessions/calendarByDistrict?'
     headers = {
@@ -28,11 +25,7 @@ def send_curl_request(district_id):
 
     return response
 
-
-
-
 def sendEmail(body):
-
     url = "https://selfregistration.cowin.gov.in/"
     to, From, subject = sys.argv[2], 'vaccine.no.reply.notifier@gmail.com', 'Vaccine Slot Availability'
     username, password = config.username, config.password
@@ -44,7 +37,7 @@ def sendEmail(body):
     message.attach(MIMEText(body, 'plain', 'UTF-8'))
 
     html = "<a href ='" + \
-        url + "'>Click here to visit.</a>"
+           url + "'>Click here to visit.</a>"
     message.attach(MIMEText(html, "html"))
 
     smtpSession = SMTP('smtp.gmail.com', 587)
@@ -54,10 +47,7 @@ def sendEmail(body):
     smtpSession.quit()
     print(str(datetime.datetime.now()) + ' Alert sent!!!')
 
-
-
-
-while(1):
+while (1):
     try:
         i = sys.argv[1]
         response = send_curl_request(i)
@@ -68,12 +58,14 @@ while(1):
             age = j["sessions"][0]["min_age_limit"]
             if available_capacity > 0 and age == 18:
                 body += "\nName - " + str(j["name"]) + "\n\t Address1 - " + str(j["address"]) + \
-                    "\n\tAddress2 - " + str(j["block_name"]) + \
-                    "\n\tPincode - " + str(j["pincode"]) + "\tSlots - " + str(
-                        available_capacity) + "-\t Date- " + str(j["sessions"][0]["date"]) + "-\t" + str(j["sessions"][0]["vaccine"]) + "\n"
+                        "\n\tAddress2 - " + str(j["block_name"]) + \
+                        "\n\tPincode - " + str(j["pincode"]) + "\tSlots - " + str(
+                    available_capacity) + "-\t Date- " + str(j["sessions"][0]["date"]) + "-\t" + str(
+                    j["sessions"][0]["vaccine"]) + "\n"
                 sendEmail(body)
 
-        print(str(datetime.datetime.now(pytz.timezone('Asia/Calcutta'))) + " (" + str(response.status_code) + " " + str(response.reason) + ")  No Slots available at " +
+        print(str(datetime.datetime.now(pytz.timezone('Asia/Calcutta'))) + " (" + str(response.status_code) + " " + str(
+            response.reason) + ")  No Slots available at " +
               i + "!! Waiting for 3secs before sending the request")
         time.sleep(3)
     except:
