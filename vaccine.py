@@ -27,7 +27,7 @@ def send_curl_request(district_id):
 
 def sendEmail(body):
     url = "https://selfregistration.cowin.gov.in/"
-    to, From, subject = sys.argv[2], 'vaccine.no.reply.notifier@gmail.com', 'Vaccine Slot Availability'
+    to, From, subject = sys.argv[2], config.username, 'Vaccine Slot Availability'
     username, password = config.username, config.password
 
     message = MIMEMultipart()

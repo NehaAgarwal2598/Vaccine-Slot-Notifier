@@ -5,6 +5,12 @@
 git clone https://github.com/NehaAgarwal2598/Vaccine-Slot-Notifier.git
 ```
 ## 2. Build the docker file to create a docker image
+Create a `config.py` and store the username and password in it -
+```python
+username="notifier@email.com" 
+password="yourPasswordForTheEmail"
+```
+## 3. Build the docker file to create a docker image
 ```bash
 docker build . -t {{name of image of you choice}}
 ```
@@ -12,7 +18,7 @@ docker build . -t {{name of image of you choice}}
 ```bash 
 docker build .  -t vaccine-slot-notifier
 ```
-## 3. Run the docker image
+## 4. Run the docker image
 ```bash
 docker run -d -e DISTRICT={{District-Id}} -e EMAIL={{emailId}} --name notifier-{{District-Id}} vaccine-slot-notifier 
 ```
